@@ -1,0 +1,34 @@
+# Quantum computing
+pennylane>=0.40
+pennylane-lightning>=0.40
+
+# Deep learning
+torch>=2.0
+torchvision>=0.15
+transformers>=4.30
+
+# NLP utilities
+datasets
+nltk
+tokenizers
+
+# Image processing
+Pillow
+opencv-python
+
+# Evaluation
+scikit-learn
+pycocotools
+rouge-score
+
+# Visualization
+matplotlib
+seaborn
+plotly
+
+# Utilities
+tqdm
+tensorboard
+wandb
+pyyaml
+gdown
