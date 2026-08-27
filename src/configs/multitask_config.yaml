@@ -1,0 +1,49 @@
+# Joint multi-task: MSA + Captioning sharing one quantum fusion layer (E5)
+model:
+  text_model_name: bert-base-uncased
+  freeze_bert_layers: 6
+  image_backbone: resnet18
+  pretrained_image: true
+  d_model: 256
+  n_qubits: 8
+  n_q_layers: 3
+  fusion_type: tensor        # ablate: attention | interference
+  noise_prob: 0.0
+  num_sentiment_classes: 3
+  vocab_size: 30522
+  bos_token_id: 101
+  eos_token_id: 102
+  pad_token_id: 0
+  max_caption_length: 50
+  decoder_layers: 3
+  decoder_heads: 8
+
+data:
+  sentiment_dataset: mvsa
+  sentiment_root: ./data/raw/mvsa
+  caption_dataset: flickr8k
+  caption_root: ./data/raw/flickr8k
+  max_text_length: 64
+  image_size: 224
+
+training:
+  mode: multitask            # alternates msa / caption batches per epoch
+  w_msa: 1.0                 # task weights in MultiTaskLoss
+  w_cap: 1.0
+  batch_size: 32
+  epochs: 30
+  lr: 3.0e-4
+  weight_decay: 1.0e-2
+  quantum_lr_mult: 10.0
+  warmup_steps: 800
+  max_grad_norm: 1.0
+  patience: 7
+  num_workers: 4
+  seed: 42
+  out_dir: checkpoints/multitask
+
+ablation:
+  # E5 variants to run with this config:
+  #   shared:    both tasks share the PQC (this file)
+  #   separate:  one PQC per task (compare against)
+  shared: true

@@ -1,0 +1,37 @@
+# Single-task: Image Captioning
+model:
+  text_model_name: bert-base-uncased   # unused in caption mode (zero ctx)
+  freeze_bert_layers: 6
+  image_backbone: resnet18
+  pretrained_image: true
+  d_model: 256
+  n_qubits: 8
+  n_q_layers: 3
+  fusion_type: tensor
+  noise_prob: 0.0
+  vocab_size: 30522
+  bos_token_id: 101          # [CLS] as BOS for BERT tokenizer
+  eos_token_id: 102          # [SEP]
+  pad_token_id: 0            # [PAD]
+  max_caption_length: 50
+  decoder_layers: 3
+  decoder_heads: 8
+
+data:
+  dataset: flickr8k          # flickr8k | coco-mini
+  root: ./data/raw/flickr8k
+  image_size: 224
+
+training:
+  mode: caption
+  batch_size: 32
+  epochs: 20
+  lr: 3.0e-4
+  weight_decay: 1.0e-2
+  quantum_lr_mult: 10.0
+  warmup_steps: 500
+  max_grad_norm: 1.0
+  patience: 5
+  num_workers: 4
+  seed: 42
+  out_dir: checkpoints/caption

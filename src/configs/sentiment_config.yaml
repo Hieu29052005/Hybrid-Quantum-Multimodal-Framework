@@ -1,0 +1,32 @@
+# Single-task: Multimodal Sentiment Analysis
+model:
+  text_model_name: bert-base-uncased
+  freeze_bert_layers: 6
+  image_backbone: resnet18
+  pretrained_image: true
+  d_model: 256
+  n_qubits: 8
+  n_q_layers: 3
+  fusion_type: tensor        # tensor | attention | interference
+  noise_prob: 0.0            # set >0 for NISQ simulation (E9)
+  num_sentiment_classes: 3
+
+data:
+  dataset: mvsa              # mvsa | mosi
+  root: ./data/raw/mvsa
+  max_text_length: 64
+  image_size: 224
+
+training:
+  mode: sentiment
+  batch_size: 32
+  epochs: 20
+  lr: 3.0e-4
+  weight_decay: 1.0e-2
+  quantum_lr_mult: 10.0      # PQC angles get lr * mult
+  warmup_steps: 500
+  max_grad_norm: 1.0
+  patience: 5
+  num_workers: 4
+  seed: 42
+  out_dir: checkpoints/sentiment
