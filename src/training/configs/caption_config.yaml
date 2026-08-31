@@ -1,0 +1,38 @@
+# Q-MMF Configuration for Image Captioning
+model:
+  d_model: 256
+  n_qubits: 8
+  n_q_layers: 3
+  fusion_type: "tensor"  # tensor | attention | interference
+  image_encoder: "resnet18"
+  text_encoder: "bert-base-uncased"
+  freeze_bert_layers: 6
+  num_sentiment_classes: 3
+  vocab_size: 10000
+  max_caption_length: 50
+  n_heads: 8
+  decoder_layers: 3
+
+training:
+  batch_size: 32
+  learning_rate: 1e-4
+  weight_decay: 0.01
+  epochs: 50
+  warmup_steps: 500
+  max_grad_norm: 1.0
+  lambda_sentiment: 1.0
+  lambda_caption: 1.0
+  lambda_reg: 0.1
+
+data:
+  msa_dataset: "mvsa"
+  caption_dataset: "flickr8k"
+  max_text_length: 128
+  max_caption_length: 50
+  image_size: 224
+
+noise:
+  depolarizing_prob: 0.0
+
+checkpoint_dir: "checkpoints/"
+log_dir: "runs/"
