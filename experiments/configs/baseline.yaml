@@ -1,0 +1,27 @@
+# Baseline (Early Fusion) Config
+model:
+  d_model: 256
+  n_qubits: 8
+  n_q_layers: 3
+  fusion_type: "tensor"
+  image_encoder: "resnet18"
+  text_encoder: "bert-base-uncased"
+  freeze_bert_layers: 6
+  num_sentiment_classes: 3
+  vocab_size: 10000
+  max_caption_length: 50
+  n_heads: 8
+  decoder_layers: 3
+
+training:
+  batch_size: 32
+  learning_rate: 1e-4
+  weight_decay: 0.01
+  epochs: 30
+  warmup_steps: 500
+  max_grad_norm: 1.0
+
+data:
+  image_size: 224
+  max_text_length: 128
+  max_caption_length: 50
